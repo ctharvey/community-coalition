@@ -27,4 +27,5 @@ jobs:
       - run: npm test
       - run: npm run build
       - name: Confirm public snapshot has no fabricated fixtures
-        run: node --input-type=module -e "import data from './public/events.json' with { type: 'json' }; if (data.events.length !== 0) throw new Error('No approved real sources configured yet')"
+        run: |
+          node --input-type=module -e "import data from './public/events.json' with { type: 'json' }; if (data.events.length !== 0) throw new Error('No approved real sources configured yet')"
