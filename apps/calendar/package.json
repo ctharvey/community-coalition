@@ -1,0 +1,17 @@
+{
+  "name": "community-coalition-calendar-poc",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Non-production public community calendar ingestion proof of concept",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "node src/build.mjs",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "node-ical": "0.27.3"
+  }
+}

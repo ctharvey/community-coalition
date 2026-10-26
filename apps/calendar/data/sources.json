@@ -1,0 +1,52 @@
+[
+  {
+    "id": "pfisd-district",
+    "organization": "PfISD",
+    "kind": "ics",
+    "status": "candidate",
+    "verifiedPublic": false,
+    "feedUrl": null,
+    "sourcePage": "https://www.pfisd.net/about-us/calendar",
+    "notes": "Official site documents public iCal subscriptions; obtain and validate the actual feed URL and category."
+  },
+  {
+    "id": "brookfield",
+    "organization": "Brookfield Owners Association",
+    "kind": "ics",
+    "status": "candidate",
+    "verifiedPublic": false,
+    "feedUrl": null,
+    "sourcePage": "https://www.brookfieldowners.com/events/list/",
+    "notes": "Public WordPress events page shows zero upcoming events. Determine whether its iCal feed works and is maintained."
+  },
+  {
+    "id": "wieland-pto",
+    "organization": "Wieland Elementary PTO",
+    "kind": "manual",
+    "status": "candidate",
+    "verifiedPublic": false,
+    "feedUrl": null,
+    "sourcePage": null,
+    "notes": "Direct organization permission required; Facebook posts must not be treated as authorized syndication."
+  },
+  {
+    "id": "ruth-barron-pto",
+    "organization": "Ruth Barron Elementary PTO",
+    "kind": "manual",
+    "status": "candidate",
+    "verifiedPublic": false,
+    "feedUrl": null,
+    "sourcePage": null,
+    "notes": "Confirm PTO's authorized contact and publication workflow."
+  },
+  {
+    "id": "northtown-mud",
+    "organization": "Northtown Municipal Utility District",
+    "kind": "manual",
+    "status": "candidate",
+    "verifiedPublic": false,
+    "feedUrl": null,
+    "sourcePage": "https://northtownmud.org/",
+    "notes": "Public notices exist; no official ICS endpoint validated."
+  }
+]
