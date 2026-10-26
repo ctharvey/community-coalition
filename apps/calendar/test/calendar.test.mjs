@@ -66,3 +66,21 @@ test('rejects unsafe source links and duplicate canonical IDs', () => {
   const item = { id: 'same', start: '2026-11-02T15:00:00.000Z', title: 'Event' };
   assert.throws(() => mergeEvents([[item], [item]]), /Duplicate canonical/);
 });
+
+test('keeps local calendar days and Chicago standard-time offsets', () => {
+  const ics = header + [
+    'BEGIN:VEVENT', 'UID:allday-1', 'DTSTAMP:20261026T120000Z',
+    'DTSTART;VALUE=DATE:20261101', 'DTEND;VALUE=DATE:20261102',
+    'SUMMARY:All-day gathering', 'END:VEVENT',
+    'BEGIN:VEVENT', 'UID:chicago-1', 'DTSTAMP:20261026T120000Z',
+    'DTSTART;TZID=America/Chicago:20261102T100000',
+    'DTEND;TZID=America/Chicago:20261102T110000',
+    'SUMMARY:Local morning', 'END:VEVENT', '',
+  ].join('\n') + footer;
+  const events = normalizeIcs(ics, source, from, until);
+  const day = events.find(e => e.title === 'All-day gathering');
+  const local = events.find(e => e.title === 'Local morning');
+  assert.equal(day.allDay, true);
+  assert.equal(day.localDate, '2026-11-01');
+  assert.equal(local.start, '2026-11-02T16:00:00.000Z');
+});
