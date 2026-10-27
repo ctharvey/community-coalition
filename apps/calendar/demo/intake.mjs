@@ -16,6 +16,16 @@ export function validateUrl(value) {
   if (!value.trim()) return true;
   try { const u = new URL(value); return u.protocol === "https:" && !u.username && !u.password; } catch { return false; }
 }
+export async function validateIntake(url, file) {
+  if (!validateUrl(url)) return "Source link must be an HTTPS URL without credentials.";
+  const hasFile = Boolean(file && file.name);
+  if (!url.trim() && !hasFile) return "Provide a source URL or a file.";
+  if (hasFile) {
+    if (file.size > MAX_BYTES) return "Choose a file up to 5 MB.";
+    return validateUpload(file.name, file.type, new Uint8Array(await file.arrayBuffer()));
+  }
+  return "";
+}
 export function mockExtract(organization, sourceUrl) {
   return [{ title: "Synthetic community event", organization, date: "", startTime: "", endTime: "", timeZone: "America/Chicago", venue: "", admission: "", sourceUrl, unknown: "Date, times, venue, and admission must be checked against the flyer." }];
 }

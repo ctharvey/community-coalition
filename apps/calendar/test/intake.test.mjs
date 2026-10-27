@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {validateUpload, validateUrl, mockExtract, validateDraft, MAX_BYTES} from "../demo/intake.mjs";
+import {validateUpload, validateUrl, validateIntake, mockExtract, validateDraft, MAX_BYTES} from "../demo/intake.mjs";
 const png = Uint8Array.from([137,80,78,71,13,10,26,10]);
 test("upload rejects unsupported, spoofed, empty and oversized files",()=>{
  assert.equal(validateUpload("flyer.png","image/png",png), "");
@@ -14,4 +14,16 @@ test("mock preserves provenance and requires corrected date and time",()=>{
  const d=mockExtract("Example org","https://example.org/post")[0]; assert.equal(d.organization,"Example org"); assert.equal(d.sourceUrl,"https://example.org/post"); assert.ok(validateDraft(d).length);
  Object.assign(d,{title:"Corrected title",date:"2026-11-07",startTime:"15:00",endTime:"17:00"}); assert.deepEqual(validateDraft(d),[]);
  d.date="2026-02-30"; assert.ok(validateDraft(d).length); d.date="2026-11-07"; d.endTime="14:00"; assert.ok(validateDraft(d).length);
+});
+
+test("a URL or a valid file can start intake", async()=>{
+ const file = new File([png], "flyer.png", {type:"image/png"});
+ const empty = new File([], "", {type:"application/octet-stream"});
+ const invalid = new File([png], "flyer.pdf", {type:"application/pdf"});
+ assert.equal(await validateIntake("https://www.facebook.com/events/123", empty), "");
+ assert.equal(await validateIntake("", file), "");
+ assert.equal(await validateIntake("https://example.org/post", file), "");
+ assert.ok(await validateIntake("", empty));
+ assert.ok(await validateIntake("http://example.org", file));
+ assert.ok(await validateIntake("https://example.org", invalid));
 });

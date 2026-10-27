@@ -48,7 +48,7 @@ This is **not a public launch**. Remaining gates:
 2. Verify timezone/all-day and recurrence behavior against the real feeds, including reschedules, cancellations and updates.
 3. Add per-source health history, change-detection alerts and cautious cross-source duplicate review. Current duplicate handling is only within each canonical source/occurrence.
 4. Secure remote fetching against DNS rebinding/private-IP resolution (the prototype is restricted to operator-committed URLs; production needs an SSRF-safe fetcher).
-5. Implement the organizer flyer-upload â†’ Luna extraction â†’ editable confirmation â†’ authenticated approval flow. No direct Facebook publishing is assumed.
+5. Implement the organizer flyer-upload Ã¢â€ â€™ Luna extraction Ã¢â€ â€™ editable confirmation Ã¢â€ â€™ authenticated approval flow. No direct Facebook publishing is assumed.
 6. Agree on original-code licensing, operator/hosting, account succession, data retention and incident response.
 
 ## Why this split?
@@ -57,7 +57,7 @@ The Apache-2.0 [Community Calendar](https://github.com/judell/community-calendar
 
 ## Local flyer intake demonstration
 
-Run `npm run demo` and open the printed loopback address. Use synthetic material only. The browser accepts a PNG, JPEG or PDF up to 5 MB and checks its signature, then generates fixed mock fields; it does not inspect or extract the file. A public HTTPS source link is optional, and a link alone cannot be extracted. Review and edit each field; add another draft for a flyer with multiple events. Date and both times must be supplied before confirmation. Confirmation is local and does not submit, approve, or publish. Drafts and original files exist only in browser memory and disappear on reload; the demo server receives no uploads. The public calendar remains independent.
+Run `npm run demo` and open the printed loopback address. Use synthetic material only. The browser accepts a PNG, JPEG or PDF up to 5 MB and checks its signature, then generates fixed mock fields; it does not inspect or extract the file. Provide a public HTTPS source link, a synthetic file, or both. A link alone produces mock fields; the demo does not retrieve or extract its content. Review and edit each field; add another draft for a flyer with multiple events. Date and both times must be supplied before confirmation. Confirmation is local and does not submit, approve, or publish. Drafts and original files exist only in browser memory and disappear on reload; the demo server receives no uploads. The public calendar remains independent.
 
 This local demo has **no authentication, organization authority, durable storage, malware scanning, privacy classification, real extraction, submission, approval, publishing, or event edit/cancel workflow**. File signatures are only a basic format check and do not establish safety. Do not expose the demo server to a network or use real participant data. A production design needs authenticated organization-scoped storage and review, CSRF and upload defenses, a retention policy, and verified organizer authority. The simple same-day time validation does not resolve DST gaps or repeated times; these need explicit review in a production workflow.
 
