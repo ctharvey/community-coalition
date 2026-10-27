@@ -8,7 +8,7 @@ This log distinguishes the project's **stated goals and preferences** from **pro
 | D-002 | Stated preference | Implementation stack | Favor Python, Java, PHP, JS/TS; avoid Drupal | Use in OSS selection |
 | D-003 | Stated premise | Brookfield event finances | HOA's ordinary community events do not fundraise; avoid mixing partner funds | Confirm with board and insurer for each event |
 | D-004 | Stated intent | School interface | PTO handles PfISD facility/permission relationship in any joint school-site event | Get PTO and district written permissions |
-| D-005 | Stated intent | Hylo | Use Hylo as the foundation for community coordination and organizer identity, subject to integration validation | Pilot hosted Hylo; verify OIDC, group authorization, public visibility, branding and APIs |
+| D-005 | Stated preference | Hylo | Self-host Hylo as the foundation for community coordination and organizer identity, subject to local validation | Run a local pilot; verify OIDC, group authorization, public visibility, branding, APIs and operations |
 | D-006 | Proposed | Public calendar | Standalone collector/public site rather than treating Hylo group feeds as public | Test real local sources |
 | D-007 | Proposed | Ad-free signups | Pilot OpenSignup as independent service | Verify security, roles, multi-org isolation |
 | D-008 | Proposed | Payments | Organization-owned Stripe Connect direct charges; no coalition custody or fee | Test with Hi.Events and identify legal operator |

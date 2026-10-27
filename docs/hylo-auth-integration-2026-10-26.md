@@ -1,6 +1,6 @@
 # Hylo authentication and integration investigation
 
-**Status:** Research, 2026-10-26. The project owner wants Hylo to be the platform's foundation. No hosted Hylo account, partner API credential, production integration, or self-hosted deployment was tested. No partner participation is implied.
+**Status:** Research, 2026-10-26. The project owner prefers self-hosted Hylo as the platform's foundation. No hosted Hylo account, partner API credential, production integration, or self-hosted deployment was tested. No partner participation is implied.
 
 ## Findings from upstream
 
@@ -13,7 +13,7 @@
 
 ## Proposed integration boundary
 
-Use Hylo as the community and organizer identity foundation **if** the hosted pilot verifies this is supported. Public calendar browsing and basic volunteer participation remain account-free. An organizer-facing calendar service can use Hylo as an OIDC provider via a server-side authorization-code flow with PKCE, a per-attempt `state` and `nonce`, exact redirect matching, validated issuer/audience/signature/expiry and secure local sessions. Request only necessary scopes; don't request refresh tokens until needed and approved. Never ask for Hylo passwords or reuse browser cookies.
+Use Hylo as the community and organizer identity foundation **if** the local self-hosted pilot verifies this is supported. Public calendar browsing and basic volunteer participation remain account-free. An organizer-facing calendar service can use Hylo as an OIDC provider via a server-side authorization-code flow with PKCE, a per-attempt `state` and `nonce`, exact redirect matching, validated issuer/audience/signature/expiry and secure local sessions. Request only necessary scopes; don't request refresh tokens until needed and approved. Never ask for Hylo passwords or reuse browser cookies.
 
 Authentication identifies a person; it does not prove authority to publish for a particular organization. Map Hylo's stable identity and group identifiers to a separately verified organization and its approved roles. Check current group membership and required rights on each privileged action, handle revocation and loss of access, deny by default, and keep draft/image/volunteer data private. A Hylo group role should grant calendar authority only after the operator and organization explicitly authorize that mapping. Treat private groups, membership lists and drafts as private; avoid logging tokens, student data or personal volunteer records.
 
@@ -21,12 +21,12 @@ The community calendar retains its own source attribution, drafts, review state 
 
 ## Validation plan
 
-1. Ask Hylo for current partner API access, terms, allowed redirect URIs and a test client; confirm hosted versus self-hosted discovery and issuer, permitted scopes, PKCE, token rotation, logout and account deletion. Do not send a request or message without the owner's instruction.
+1. Inspect and run a local self-hosted Hylo instance with test data; determine its container, database, environment, identity-client provisioning and licensing requirements. Validate custom-domain cookies, OIDC discovery, issuer, scopes, PKCE, token rotation, logout and account deletion. If upstream guidance or hosted partner access is needed, ask the owner before contacting Hylo.
 2. With test identities and two independently controlled test groups, demonstrate OIDC login to a local calendar service; verify signature, issuer, audience, state/nonce, expiry, secure cookies, logout and revoked access. Do not require sign-in for public browsing.
 3. Verify group membership and steward/role data is available to that client. Test organization A cannot access B's drafts or submissions, including after removal from a group; document how role changes propagate and what happens when Hylo is unavailable.
 4. Test one synthetic event's read, creation, explicit approval, visibility, update and cancellation via the supported API with consent and test groups. Determine whether events should live in Hylo, the calendar, or be synchronized, and test duplicate and failure recovery. Do not publish a real event as a test.
-5. Evaluate hosted Hylo's branding/custom-domain options and supported integration with OpenSignup. In a separate local deployment experiment inspect container and database requirements, cookie domains, issuer, certificates and backup needs; do not assume a custom domain or single shared database is already supported.
+5. Evaluate self-hosted Hylo branding and custom-domain configuration, certificates, backups and supported integration with OpenSignup. Do not assume a custom domain or a single shared database already works.
 
 ## Decisions still open
 
-Hosted versus self-hosted Hylo, API access and terms, cross-subdomain identity and session design, organization-to-group mapping and verification, exact public/private content model, data ownership, third-party authentication support, brand/custom-domain capability, operator, and deployment/retention policy. The public calendar needs no registration regardless of organizer identity choice.
+Self-hosted operational readiness, API client provisioning and terms, cross-subdomain identity and session design, organization-to-group mapping and verification, exact public/private content model, data ownership, third-party authentication support, brand/custom-domain capability, operator, and deployment/retention policy. The public calendar needs no registration regardless of organizer identity choice.

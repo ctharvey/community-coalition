@@ -8,7 +8,7 @@ The calendar and submission workflow is Priority 1 and can be developed before o
 
 - [ ] Confirm project operator, provisional moderation/decision authority, scope, and any public-facing disclaimers.
 - [ ] Design a shared brand and app subdomains around Hylo, with separately containerized apps and a separate shared platform database; define data ownership, access controls, integration boundaries, backups and deployment.
-- [ ] Validate Hylo OIDC, partner API access and group-role authorization for organizer workflows before selecting an authentication integration; see [Hylo investigation](hylo-auth-integration-2026-10-26.md).
+- [ ] Validate self-hosted Hylo OIDC, API client provisioning and group-role authorization for organizer workflows before selecting an authentication integration; see [Hylo investigation](hylo-auth-integration-2026-10-26.md).
 - [ ] Confirm willing *pilot participants* and each organization's official contact/authorization process.
 - [ ] Compile actual public calendar sources for Brookfield, PfISD/Wieland, Northtown MUD, and one apartment or additional neighborhood; note whether feed, webpage, or manual input.
 - [ ] Test Hylo account-free event visibility and public/private controls; verify group calendar feeds do not expose internal events.
@@ -43,10 +43,10 @@ The calendar and submission workflow is Priority 1 and can be developed before o
 
 ## Priority 3 — Test Hylo with real organizers
 
-- [ ] Pilot hosted Hylo with two independent organizer groups, with their agreement.
+- [ ] Build and validate a local self-hosted Hylo pilot; later test with two independent organizer groups, with their agreement.
 - [ ] Test event sharing, equipment and volunteer requests, joint activities, private organizer discussions, and reusable resources.
 - [ ] Validate permissions and co-host approval; don't conflate cross-posting with legal endorsement.
-- [ ] Decide hosted Hylo, self-host Hylo, or lighter hub based on usage and integration constraints.
+- [ ] Validate self-hosting operations, integration and support; use a hosted comparison only if it helps resolve a specific question.
 
 ## Priority 4 — Payments
 
