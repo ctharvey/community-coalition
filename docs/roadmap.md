@@ -4,9 +4,10 @@
 
 The calendar and submission workflow is Priority 1 and can be developed before other organizations formally join. Organizer authorization, privacy, and an appropriate operator remain gates for real event publication. Priorities 2-4 follow below; payment implementation is deferred until event and volunteer workflows are useful.
 
-## P0 â€” Establish trustworthy foundations
+## Foundations — required for real use
 
 - [ ] Confirm project operator, provisional moderation/decision authority, scope, and any public-facing disclaimers.
+- [ ] Design a shared brand and app subdomains, with separately containerized apps and a separate shared platform database; define data ownership, access controls, integration boundaries, backups and deployment.
 - [ ] Confirm willing *pilot participants* and each organization's official contact/authorization process.
 - [ ] Compile actual public calendar sources for Brookfield, PfISD/Wieland, Northtown MUD, and one apartment or additional neighborhood; note whether feed, webpage, or manual input.
 - [ ] Test Hylo account-free event visibility and public/private controls; verify group calendar feeds do not expose internal events.
@@ -15,7 +16,7 @@ The calendar and submission workflow is Priority 1 and can be developed before o
 
 **Gate:** Appropriate operator, organization authorization, and privacy controls are established before real events are published. Building the calendar does not require other organizations to join first.
 
-## P1 â€” Public calendar proof of concept
+## Priority 1 — Calendar and event submission
 
 - [ ] Accept authorized flyer submissions and extract event fields with GPT-6 Luna using standard processing by default; require organizer review and correction.
 - [ ] Implement separate confirmation, submission, approval and publication transitions, including organization access and cancellation handling.
@@ -29,7 +30,7 @@ The calendar and submission workflow is Priority 1 and can be developed before o
 
 **Exit:** Real approved events from multiple independent sources remain accurate after changes.
 
-## P1 â€” Ad-free signup proof of concept
+## Priority 2 — Replace volunteer signup services
 
 - [ ] Deploy/evaluate OpenSignup in a non-production environment; inspect its source and license.
 - [ ] Test egg-hunt setup and cleanup, candy and supply donations, classroom or PTO volunteers, food contributions, reminders and organizer notifications.
@@ -39,14 +40,14 @@ The calendar and submission workflow is Priority 1 and can be developed before o
 
 **Exit:** Volunteers can safely claim slots without ads; organizers see only their own rosters.
 
-## P1/P2 â€” Collaboration hub
+## Priority 3 — Test Hylo with real organizers
 
 - [ ] Pilot hosted Hylo with two independent organizer groups, with their agreement.
 - [ ] Test event sharing, equipment and volunteer requests, joint activities, private organizer discussions, and reusable resources.
 - [ ] Validate permissions and co-host approval; don't conflate cross-posting with legal endorsement.
 - [ ] Decide hosted Hylo, self-host Hylo, or lighter hub based on usage and integration constraints.
 
-## P2 â€” Payments, registration, and optional finance tools
+## Priority 4 — Payments
 
 - [ ] Defer implementation until the event and volunteer workflows are useful; ensure each organization retains control of its own financial account.
 - [ ] Inspect/test Hi.Events multi-organizer role isolation, Stripe Connect onboarding, and direct-charge account routing.
@@ -55,7 +56,7 @@ The calendar and submission workflow is Priority 1 and can be developed before o
 - [ ] Evaluate fees on realistic small-ticket PTO transactions; account for processing, hosting, and refunds.
 - [ ] Publish separate seller/refund/tax responsibilities; do not pool money or issue coalition donation receipts.
 
-## P3 â€” Advanced capabilities
+## Later — Advanced capabilities
 
 - [ ] Structured equipment lending/pledges and quantity tracking if requests/offers prove insufficient.
 - [ ] Formal wiki with BookStack if native Hylo resource pages become limiting.

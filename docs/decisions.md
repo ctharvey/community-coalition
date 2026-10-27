@@ -15,13 +15,14 @@ This log distinguishes the project's **stated goals and preferences** from **pro
 | D-009 | Open | Legal structure | No nonprofit has been formed for this concept; initial coordination could be informal | Legal/operational decision after pilot |
 | D-010 | Open | Hosting and governance | Who owns domain, deployment, admin access, backups, terms, insurance? | Establish before public launch |
 | D-011 | Open | Licenses | Several candidates use AGPL/extra terms | Audit compatibility before any code incorporation |
+| D-012 | Stated goal | Unified platform architecture | One shared brand across app subdomains, with separate app containers and a separate database container for shared platform data | Choose domain, operator, database, data boundaries and supported third-party integrations |
 
 ## Decisions to request from project participants
 
 1. Which **two organizations** will participate in a voluntary pilot?
-2. Is the first high-value deliverable the public calendar, volunteer signups, or both?
+2. What domain and identity should the platform use, and who controls them?
 3. Who can authorize publication on behalf of an organization?
-4. Should early technical prototypes be separately hosted or run in a single test environment?
+4. Which data is owned by each app, and which supported interfaces should share it?
 5. Who will operate the system, pay modest infrastructure/email costs, and respond to privacy or payment issues?
 
 ## Change practice

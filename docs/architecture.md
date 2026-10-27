@@ -1,6 +1,28 @@
 # Architecture options and integration boundaries
 
-**Status:** Proposal; no platform selected or deployed.
+**Status:** Owner-stated architectural direction; implementation and hosting choices remain open. No platform is deployed.
+
+## Intended deployment and shared brand
+
+Present the services as one recognizable community platform: a consistent name, visual identity, navigation, and accessible design across apps. Use separate subdomains under a domain chosen by the operator, for example `calendar.example.org`, `volunteer.example.org`, and `community.example.org`. These are illustrative placeholders, not registered or selected domains. Account-free public calendar viewing and volunteer participation remain goals; a common visual identity does not imply a shared account or partner endorsement.
+
+Run each self-hosted app in its own container and the shared platform database in a separate container. A reverse proxy can route subdomains to the appropriate app and terminate HTTPS. The database should be on an internal network, with persistent storage, backups and tested restores; it should not be exposed publicly. This is an architecture goal, not an existing deployment.
+
+```text
+Browser -> HTTPS reverse proxy -> calendar subdomain  -> calendar container
+                               -> volunteer subdomain -> signup container
+                               -> community subdomain -> collaboration service
+                                      |                 |
+                                      +-> approved service interfaces
+                                              |
+                             shared platform database container
+```
+
+The shared database can hold platform-owned organization, approved-event and integration-reference data. Data ownership, authentication and per-organization authorization must be enforced on every access path, using least-privilege service credentials and appropriate isolation. Public views must exclude drafts and volunteer details. Sharing one database process does not require every app to read or write every table: use explicit ownership, separate schemas or databases where appropriate, and service APIs or events for cross-app changes.
+
+Hylo is initially a **hosted pilot**, and OpenSignup and Hi.Events are candidates, not selected implementations. Their own persistence requirements, supported integration interfaces, branding capabilities, and licenses need verification before any shared-database integration. A hosted service may retain its own database; do not assume third-party applications can safely use the platform database directly or that separate containers alone provide tenant isolation. Payments remain controlled by each organization.
+
+Open decisions include the real domain and subdomain names, visual identity, operator and hosting, database engine and schema ownership, identity and access management, integration contracts, secrets, backup and recovery, retention, and any high-availability needs. Establish these through a local proof of concept before public deployment.
 
 ## Recommended conceptual split
 
@@ -66,7 +88,7 @@ Relevant: https://docs.stripe.com/connect and https://stripe.com/connect/pricing
 
 **Option A: modular hosted pilot (lowest commitment).** Hosted Hylo, standalone public calendar, hosted or self-hosted signup forms, and external organization-owned payment links. Risk: limited integration due hosted APIs.
 
-**Option B: modular self-hosted services.** Self-host collector/site and selected OSS signup/ticketing systems, preserving separate DBs and permissions; link services via APIs/webhooks/deep links.
+**Option B: modular self-hosted services.** Use separately containerized apps behind subdomains, with a separate shared platform database container and explicit data ownership and permissions. Third-party services may require their own database or supported APIs; validate each integration.
 
 **Option C: fork Hylo.** Only after testing a core requirement that cannot be solved by integration. Forking implies maintaining Sails/GraphQL/React internals and upstream merges.
 
