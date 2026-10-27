@@ -1,0 +1,2 @@
+FROM postgis/postgis:18-3.6
+COPY apps/backend/migrations/schema.sql /docker-entrypoint-initdb.d/01-schema.sql

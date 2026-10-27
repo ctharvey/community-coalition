@@ -1,6 +1,6 @@
 # Hylo authentication and integration investigation
 
-**Status:** Research, 2026-10-26. The project owner prefers self-hosted Hylo as the platform's foundation. No hosted Hylo account, partner API credential, production integration, or self-hosted deployment was tested. No partner participation is implied.
+**Status:** Research, 2026-10-26. The project owner prefers self-hosted Hylo as the platform's foundation. A self-hosted development pilot now runs on a desk-side Docker host; no hosted Hylo account, partner API credential, production integration, or production deployment was tested. No partner participation is implied.
 
 ## Findings from upstream
 
@@ -30,3 +30,9 @@ The community calendar retains its own source attribution, drafts, review state 
 ## Decisions still open
 
 Self-hosted operational readiness, API client provisioning and terms, cross-subdomain identity and session design, organization-to-group mapping and verification, exact public/private content model, data ownership, third-party authentication support, brand/custom-domain capability, operator, and deployment/retention policy. The public calendar needs no registration regardless of organizer identity choice.
+
+## Local pilot checkpoint
+
+An isolated self-hosted pilot was started from upstream revision `c141ceec71dae2db9f84c36ccae6bab5fd37e943`. The web login page rendered; the GraphQL API responded; OIDC discovery and JWKS returned localhost URLs after a pilot-only Vite proxy adjustment. A synthetic password login, incorrect-password rejection, session identity and logout succeeded. A second synthetic user was denied an edit to the first user's private group. A Postgres dump restored into a separate pilot database with matching synthetic user and group counts. These checks do not prove cross-app OIDC sign-in, complete organization isolation or backup recovery for production.
+
+Setup required a Node 24 container build instead of the obsolete upstream web Dockerfile, PostGIS 18 for the upstream schema dump, a pilot-only workaround for the starter seed's nonexistent `groups_posts.active` field, explicit configuration to disable Segment analytics, and invalid placeholder keys for external integrations required by startup. The upstream seed marks migrations as applied, which must not be mistaken for proof that every migration was validated. The environment has no production data, no public exposure, and no live payment, external login or email configuration. See `infra/hylo-pilot/README.md` for the reproducible setup, remaining checks and retained pilot volumes.
