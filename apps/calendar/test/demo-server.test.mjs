@@ -15,4 +15,6 @@ test('demo serves only its local assets and accepts no uploads or draft requests
   assert.equal((await fetch(new URL('drafts', url))).status, 404);
   assert.equal((await fetch(url, {method:'POST', body:'private upload'})).status, 404);
   assert.equal((await fetch(new URL('logic.mjs', url))).status, 200);
+  assert.equal((await fetch(new URL('extract', url), {method:'POST',headers:{'Origin':'https://example.org','Content-Type':'application/json'},body:'{}'})).status, 403);
+  assert.equal((await fetch(new URL('extract', url), {method:'POST',headers:{'Content-Type':'application/json'},body:'{}'})).status, 403);
 });
