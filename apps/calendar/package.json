@@ -9,7 +9,8 @@
   },
   "scripts": {
     "build": "node src/build.mjs",
-    "test": "node --test"
+    "test": "node --test",
+    "demo": "node demo/server.mjs"
   },
   "dependencies": {
     "node-ical": "0.27.3"
