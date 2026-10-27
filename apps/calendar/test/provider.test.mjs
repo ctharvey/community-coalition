@@ -12,3 +12,12 @@ test("rejects URL-only extraction, failed tier, and malformed output",async()=>{
  await assert.rejects(()=>extract(input,"key",async()=>({ok:true,json:async()=>({status:"completed",service_tier:"default"})})),/Flex/);
  await assert.rejects(()=>extract(input,"key",async()=>({ok:true,json:async()=>({status:"completed",service_tier:"flex",output:[{content:[{type:"output_text",text:"{}"}]}]})})),/invalid event/);
 });
+
+test("passes a direct image link to OpenAI without requiring attribution",async()=>{
+ const result=await extract({...input,sourceUrl:"",text:"",imageUrl:"https://example.org/flyer.png"},"key",async(url, options)=>{
+  const request=JSON.parse(options.body); assert.deepEqual(request.input[0].content,[{type:"input_image",image_url:"https://example.org/flyer.png"}]);
+  return {ok:true,json:async()=>({status:"completed",service_tier:"flex",output:[{content:[{type:"output_text",text:JSON.stringify({events:[event]})}]}]})};
+ });
+ assert.equal(result[0].sourceUrl,"");
+ await assert.rejects(()=>extract({...input,imageUrl:"https://127.0.0.1/a.png"},"key"),/Image link/);
+});

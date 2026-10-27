@@ -1,4 +1,4 @@
-// Synthetic extraction only. The upload is never sent to a service.
+// Input validation shared by the local demo and extraction provider.
 export const MAX_BYTES = 5 * 1024 * 1024;
 export function validateUpload(name, type, bytes) {
   if (!bytes.length || bytes.length > MAX_BYTES) return "Choose a file up to 5 MB.";
@@ -16,10 +16,19 @@ export function validateUrl(value) {
   if (!value.trim()) return true;
   try { const u = new URL(value); return u.protocol === "https:" && !u.username && !u.password; } catch { return false; }
 }
-export async function validateIntake(url, file) {
+export function validateImageUrl(value) {
+  if (!value) return true;
+  try {
+    const u = new URL(value);
+    const host = u.hostname.toLowerCase();
+    return u.protocol === "https:" && !u.username && !u.password && host.includes(".") && !host.endsWith(".local") && !host.endsWith(".localhost") && !/^[\d.]+$/.test(host) && !host.includes(":");
+  } catch { return false; }
+}
+export async function validateIntake(url, file, imageUrl = "", text = "") {
   if (!validateUrl(url)) return "Source link must be an HTTPS URL without credentials.";
+  if (!validateImageUrl(imageUrl)) return "Image link must be a public HTTPS URL without credentials.";
   const hasFile = Boolean(file && file.name);
-  if (!url.trim() && !hasFile) return "Provide a source URL or a file.";
+  if (!url.trim() && !hasFile && !imageUrl && !text.trim()) return "Provide an image, image link, text, or source URL.";
   if (hasFile) {
     if (file.size > MAX_BYTES) return "Choose a file up to 5 MB.";
     return validateUpload(file.name, file.type, new Uint8Array(await file.arrayBuffer()));

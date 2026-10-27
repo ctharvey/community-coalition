@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {validateUpload, validateUrl, validateIntake, mockExtract, validateDraft, MAX_BYTES} from "../demo/intake.mjs";
+import {validateUpload, validateUrl, validateImageUrl, validateIntake, mockExtract, validateDraft, MAX_BYTES} from "../demo/intake.mjs";
 const png = Uint8Array.from([137,80,78,71,13,10,26,10]);
 test("upload rejects unsupported, spoofed, empty and oversized files",()=>{
  assert.equal(validateUpload("flyer.png","image/png",png), "");
@@ -26,4 +26,13 @@ test("a URL or a valid file can start intake", async()=>{
  assert.ok(await validateIntake("", empty));
  assert.ok(await validateIntake("http://example.org", file));
  assert.ok(await validateIntake("https://example.org", invalid));
+});
+
+test("image link or text works without an attribution link", async()=>{
+ const empty = new File([], "");
+ assert.equal(await validateIntake("", empty, "https://example.org/flyer.jpg"), "");
+ assert.equal(await validateIntake("", empty, "", "Synthetic flyer"), "");
+ assert.ok(await validateIntake("", empty, "http://example.org/image.png"));
+ assert.ok(await validateIntake("", empty, "https://user:pass@example.org/image.png"));
+ for (const value of ["https://127.0.0.1/image.png", "https://localhost/image.png", "https://printer.local/image.png", "https://[::1]/image.png"]) assert.equal(validateImageUrl(value),false);
 });
