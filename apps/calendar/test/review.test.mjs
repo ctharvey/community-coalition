@@ -10,7 +10,7 @@ test('stores an original and extraction together and rejects invalid files', asy
   t.after(()=>rm(root,{recursive:true,force:true}));
   const bytes=Buffer.from([137,80,78,71,13,10,26,10]);
   const body={organization:'Example',sourceUrl:'',imageUrl:'https://example.org/image.png',file:{name:'flyer.png',type:'image/png',data:bytes.toString('base64')}};
-  const events=[{title:'Synthetic event',date:'2026-11-07'}];
+  const events=[{title:'Synthetic event',description:'Games and crafts',date:'2026-11-07'}];
   const id=await saveReview(root,body,events);
   assert.deepEqual(await readFile(path.join(root,id,'original.png')),bytes);
   const record=JSON.parse(await readFile(path.join(root,id,'extraction.json'),'utf8'));

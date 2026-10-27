@@ -1,9 +1,9 @@
 import {validateIntake, mockExtract, validateDraft} from "/logic.mjs";
 const intake = document.querySelector("#intake"), message = document.querySelector("#message"), drafts = document.querySelector("#drafts");
-const fields = [["title","Title","text"],["organization","Organization","text"],["date","Date","date"],["startTime","Start time","time"],["endTime","End time","time"],["timeZone","Time zone","text"],["venue","Venue or address","text"],["admission","Admission or RSVP","text"],["sourceUrl","Original link","url"],["unknown","Unknown or ambiguous items","text"]];
+const fields = [["title","Title","text"],["description","Event description","textarea"],["organization","Organization","text"],["date","Date","date"],["startTime","Start time","time"],["endTime","End time","time"],["timeZone","Time zone","text"],["venue","Venue or address","text"],["admission","Admission or RSVP","text"],["sourceUrl","Original link","url"],["unknown","Unknown or ambiguous items","text"]];
 function editor(draft) {
   const form = document.createElement("form"), heading = document.createElement("h2"); heading.textContent = "Review extracted draft"; form.append(heading);
-  for (const [key, label, type] of fields) { const l=document.createElement("label"), input=document.createElement("input"); l.textContent=label; input.name=key; input.type=type; input.value=draft[key]; l.append(input); form.append(l); }
+  for (const [key, label, type] of fields) { const l=document.createElement("label"), input=document.createElement(type === "textarea" ? "textarea" : "input"); l.textContent=label; input.name=key; if(type !== "textarea") input.type=type; input.value=draft[key] || ""; l.append(input); form.append(l); }
   const error=document.createElement("p"); error.className="error"; error.setAttribute("role","alert"); form.append(error);
   const confirm=document.createElement("button"); confirm.textContent="Confirm draft"; form.append(confirm);
   const split=document.createElement("button"); split.type="button"; split.textContent="Add another draft"; split.onclick=()=>editor(Object.fromEntries(new FormData(form))); form.append(split);

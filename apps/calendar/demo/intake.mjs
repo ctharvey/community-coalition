@@ -36,7 +36,7 @@ export async function validateIntake(url, file, imageUrl = "", text = "") {
   return "";
 }
 export function mockExtract(organization, sourceUrl) {
-  return [{ title: "Synthetic community event", organization, date: "", startTime: "", endTime: "", timeZone: "America/Chicago", venue: "", admission: "", sourceUrl, unknown: "Date, times, venue, and admission must be checked against the flyer." }];
+  return [{ title: "Synthetic community event", description: "", organization, date: "", startTime: "", endTime: "", timeZone: "America/Chicago", venue: "", admission: "", sourceUrl, unknown: "Date, times, venue, and admission must be checked against the flyer." }];
 }
 export function validateDraft(d) {
   const errors = [];
