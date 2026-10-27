@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import {extract} from "../demo/provider.mjs";
+import {extract, chicagoDate} from "../demo/provider.mjs";
 const input={organization:"Example Org",sourceUrl:"https://example.org/post",text:"Synthetic fair November 7",file:null};
 const event={title:"Fair",organization:"",date:"2026-11-07",startTime:"",endTime:"",timeZone:"",venue:"",admission:"",unknown:"Time unknown"};
 test("sends synthetic content with Flex and structured schema and preserves provenance",async()=>{
@@ -20,4 +20,18 @@ test("passes a direct image link to OpenAI without requiring attribution",async(
  });
  assert.equal(result[0].sourceUrl,"");
  await assert.rejects(()=>extract({...input,imageUrl:"https://127.0.0.1/a.png"},"key"),/Image link/);
+});
+
+test("date reference uses Chicago calendar day and prompts for review of assumed years",async()=>{
+ const now=new Date("2027-01-01T03:00:00Z");
+ assert.equal(chicagoDate(now),"2026-12-31");
+ await extract(input,"key",async(url,options)=>{
+  const instructions=JSON.parse(options.body).instructions;
+  assert.match(instructions,/Today in America\/Chicago is 2026-12-31/);
+  assert.match(instructions,/today or later/);
+  assert.match(instructions,/otherwise use the next year/);
+  assert.match(instructions,/year was assumed and requires confirmation/);
+  assert.match(instructions,/Preserve any explicit year/);
+  return {ok:true,json:async()=>({status:"completed",service_tier:"flex",output:[{content:[{type:"output_text",text:JSON.stringify({events:[event]})}]}]})};
+ },now);
 });
