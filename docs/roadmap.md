@@ -7,7 +7,8 @@ The calendar and submission workflow is Priority 1 and can be developed before o
 ## Foundations — required for real use
 
 - [ ] Confirm project operator, provisional moderation/decision authority, scope, and any public-facing disclaimers.
-- [ ] Design a shared brand and app subdomains, with separately containerized apps and a separate shared platform database; define data ownership, access controls, integration boundaries, backups and deployment.
+- [ ] Design a shared brand and app subdomains around Hylo, with separately containerized apps and a separate shared platform database; define data ownership, access controls, integration boundaries, backups and deployment.
+- [ ] Validate Hylo OIDC, partner API access and group-role authorization for organizer workflows before selecting an authentication integration; see [Hylo investigation](hylo-auth-integration-2026-10-26.md).
 - [ ] Confirm willing *pilot participants* and each organization's official contact/authorization process.
 - [ ] Compile actual public calendar sources for Brookfield, PfISD/Wieland, Northtown MUD, and one apartment or additional neighborhood; note whether feed, webpage, or manual input.
 - [ ] Test Hylo account-free event visibility and public/private controls; verify group calendar feeds do not expose internal events.

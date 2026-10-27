@@ -20,7 +20,7 @@ Browser -> HTTPS reverse proxy -> calendar subdomain  -> calendar container
 
 The shared database can hold platform-owned organization, approved-event and integration-reference data. Data ownership, authentication and per-organization authorization must be enforced on every access path, using least-privilege service credentials and appropriate isolation. Public views must exclude drafts and volunteer details. Sharing one database process does not require every app to read or write every table: use explicit ownership, separate schemas or databases where appropriate, and service APIs or events for cross-app changes.
 
-Hylo is initially a **hosted pilot**, and OpenSignup and Hi.Events are candidates, not selected implementations. Their own persistence requirements, supported integration interfaces, branding capabilities, and licenses need verification before any shared-database integration. A hosted service may retain its own database; do not assume third-party applications can safely use the platform database directly or that separate containers alone provide tenant isolation. Payments remain controlled by each organization.
+Hylo is the intended community and organizer identity foundation, subject to a **hosted pilot** and integration validation; OpenSignup and Hi.Events remain candidates. See the [authentication and integration investigation](hylo-auth-integration-2026-10-26.md). Their own persistence requirements, supported integration interfaces, branding capabilities, and licenses need verification before any shared-database integration. A hosted service may retain its own database; do not assume third-party applications can safely use the platform database directly or that separate containers alone provide tenant isolation. Payments remain controlled by each organization.
 
 Open decisions include the real domain and subdomain names, visual identity, operator and hosting, database engine and schema ownership, identity and access management, integration contracts, secrets, backup and recovery, retention, and any high-availability needs. Establish these through a local proof of concept before public deployment.
 
@@ -35,7 +35,7 @@ Public organization calendars / approved submissions
                     +---- original organization/event link
                     +---- organizer collaboration links (when public)
 
-Independent organizations -> coalition collaboration hub (Hylo candidate)
+Independent organizations -> coalition collaboration and organizer identity (Hylo intended; pilot pending)
                            -> shared documents / requests / offers
                            -> event-related signup links (OpenSignup candidate)
                            -> approved paid event links (Hi.Events candidate)
