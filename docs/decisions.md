@@ -49,6 +49,16 @@ The prototype's year-guessing behavior is deliberately not ported. No provider r
 Live paid model verification remains outstanding; tests use a local fake and synthetic content.
 No organization endorsement, financial custody or production deployment is authorized.
 
+## 2026-10-28 - Facebook Page registration investigation
+
+D-021 (Investigated; implementation not approved by this entry): test organizer-authorized Facebook Page
+access through Facebook Login for Business instead of assuming arbitrary public feed access. Start by
+validating the minimal read permissions and user-derived long-lived Page-token path with one test Page;
+compare business-integration tokens where PTO business portfolios are available. Meta App Review,
+Advanced Access, operator business verification and real Coalition organizer identity are launch gates.
+Connecting a Page never grants administration over an existing Coalition organization. No Meta app,
+account connection, scraping job or production deployment was created. See [the assessment](facebook-page-onboarding.md).
+
 ## Decisions to request from project participants
 
 1. Which **two organizations** will participate in a voluntary pilot?
