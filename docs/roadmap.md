@@ -6,6 +6,10 @@ The calendar and submission workflow is Priority 1 and can be developed before o
 
 ## Foundations — required for real use
 
+Update 2026-10-28: Hylo-specific tasks below are superseded historical research. The selected foundation is
+Astro/React + Java/Spring Boot + PostgreSQL. Initial milestone covers synthetic local calendar/review;
+real OIDC and organization onboarding, ingestion, volunteer tools and payments follow separately.
+
 - [ ] Confirm project operator, provisional moderation/decision authority, scope, and any public-facing disclaimers.
 - [ ] Design a shared brand and app subdomains around Hylo, with separately containerized apps and a separate shared platform database; define data ownership, access controls, integration boundaries, backups and deployment.
 - [ ] Validate self-hosted Hylo OIDC, API client provisioning and group-role authorization for organizer workflows before selecting an authentication integration; see [Hylo investigation](hylo-auth-integration-2026-10-26.md).

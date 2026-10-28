@@ -1,6 +1,64 @@
 # Architecture options and integration boundaries
 
-**Status:** Owner-stated architectural direction; implementation and hosting choices remain open. No platform is deployed.
+**Current direction (2026-10-28):** Custom application selected; the Hylo architecture below is historical.
+No production deployment. See decisions D-013 through D-019.
+
+## Calendar foundation
+
+- community-coalition: planning, decisions and preserved apps/calendar prototype.
+- community-coalition-frontend: Astro SSR, React organizer island, generated OpenAPI types, independent npm build.
+- community-coalition-api: Java 21 Spring Boot controllers/services/JDBC repositories, PostgreSQL, Flyway,
+  Spring Security, springdoc and Testcontainers. Independent Gradle build; no Yawn runtime dependencies.
+- API owns writes. Frontend has no database credentials. Anonymous GETs expose PUBLISHED and previously
+  published CANCELLED events only. Details are server rendered; API failures return 503, absent events 404.
+- Organizer workflow: DRAFT -> CONFIRMED -> SUBMITTED -> APPROVED -> PUBLISHED. Edits return to DRAFT;
+  rejected events can be corrected; published events can be cancelled with a visible notice.
+- Database row locks serialize mutations. Every edit/transition stores actor, timestamp, statuses and a
+  full private revision snapshot. Role membership is checked in the backend on every private access.
+- Mock images are decoded, bounded and discarded. No public upload endpoint/storage. No live AI calls.
+- Local Basic users and fixtures require local profile and an environment password; default private access
+  denied. Real OIDC, issuer/audience checks, onboarding and production cookie/rate-limit controls deferred.
+
+### API and contract ownership
+
+Public GET /api/public/events supports search and organization slug; GET /api/public/events/{id} returns one
+public event; GET /api/public/organizations lists organizations with public events. Upcoming list capped at 200.
+Organizer endpoints create a mock extraction, read/edit a private event and explicitly request one transition.
+API springdoc exports OpenAPI through /v3/api-docs; API tests export build/openapi.json and detect drift against
+openapi.json. Frontend commits a release snapshot in contracts/openapi.json and generates src/data/api.generated.ts.
+This artifact exchange avoids build-time dependencies on a sibling checkout or running API.
+
+### Existing iCalendar migration
+
+Keep apps/calendar/src/calendar.mjs and its tests unchanged for now. A TypeScript ingestion tool best preserves
+node-ical recurrence expansion, EXDATE, RECURRENCE-ID, cancellations and timezone behavior. A Java rewrite adds
+parity risk; a standalone worker service adds operational burden before there are verified feeds.
+Next ingestion milestone: backend-authenticated staging API with organization-bound service identity,
+source registry, idempotency by source + UID + occurrence key, conditional fetch state and last-good snapshots.
+Feed disappearance must not imply cancellation; explicit cancellation tombstones need propagation. Existing
+prototype omits cancelled instances from snapshots, so diffing absence alone is unsafe. Define this mapping
+and prove recurrence/DST/cancellation parity before enabling live imports. Collectors cannot publish.
+
+### Reference review, dependencies and licensing
+
+Reviewed Yawn's current frontend config/data helper, API security/build/error handling, DB migrations,
+core build and deployment Compose/Caddy. Reuse patterns, not domain code or its composite-build registry.
+No license files were found at the five Yawn repository roots; copying their code is deferred.
+Spring Boot/Security/Flyway community tooling is Apache-2.0; Astro/React are MIT; PostgreSQL uses its permissive
+PostgreSQL license; node-ical Apache-2.0 remains in the preserved prototype. Verify transitive license notices
+before distribution. npm audit and dependency locking form a baseline, not a complete security review.
+Sources: https://docs.spring.io/spring-boot/system-requirements.html ; https://springdoc.org/ ;
+https://docs.astro.build/en/guides/on-demand-rendering/ . Versions checked October 28, 2026.
+
+### Local infrastructure and launch gates
+
+Each app has its own Dockerfile and CI. API Compose starts loopback-only PostgreSQL. See each README for setup.
+Local Caddy routing is documented in docs/local-development.md. No deployment registry or production host changes.
+Backups: pg_dump custom format, independent restore database, validate Flyway and record counts before any launch.
+Operator, identity provider, license, organization authorization, retention, malware scanning, monitoring and
+verified backup/restore are required before handling real data. Organizations retain their own finances.
+
+## Historical architecture research (superseded)
 
 ## Intended deployment and shared brand
 
