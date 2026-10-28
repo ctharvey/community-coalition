@@ -6,5 +6,6 @@ Coordination docs and the preserved node-ical prototype live in community-coalit
 Public reads return published events only. Organizer writes enforce database memberships and audit changes.
 Default private access is denied. Local synthetic accounts require the local profile; OIDC is deferred.
 Frontend API_BASE_URL is server-only. API DB_URL, DB_USERNAME, DB_PASSWORD and LOCAL_DEMO_PASSWORD use environment configuration.
-No live AI, Facebook fetching, production deployment or real organization data.
+An optional Java Luna adapter now supports configured extraction; tests use synthetic local provider responses.
+No Facebook fetching, production deployment or real organization data. Dates require explicit human correction.
 See root README and coordination docs/architecture.md for setup and decisions.

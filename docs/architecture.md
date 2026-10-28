@@ -15,7 +15,10 @@ No production deployment. See decisions D-013 through D-019.
   rejected events can be corrected; published events can be cancelled with a visible notice.
 - Database row locks serialize mutations. Every edit/transition stores actor, timestamp, statuses and a
   full private revision snapshot. Role membership is checked in the backend on every private access.
-- Mock images are decoded, bounded and discarded. No public upload endpoint/storage. No live AI calls.
+- PNG/JPEG images are decoded and bounded, then either mocked or sent through the Java Luna adapter.
+  Configured extraction uses standard processing, strict output and store=false. No public upload storage.
+  Original bytes are discarded; private suggestions, digest and provider metadata are retained.
+  Dates remain unset until human correction; missing years are never guessed. No paid calls were used in tests.
 - Local Basic users and fixtures require local profile and an environment password; default private access
   denied. Real OIDC, issuer/audience checks, onboarding and production cookie/rate-limit controls deferred.
 

@@ -42,6 +42,11 @@ Authorizing person: project owner, October 28 implementation handoff.
   Dates remain missing until human correction. Extraction never confirms, submits, approves or publishes.
 
 Reversal: review API contract/migration changes; replace ingestion and identity behind these boundaries.
+The owner's subsequent instruction on 2026-10-28 authorizes adapting the prototype flyer extractor into Java.
+D-020 (Implemented for review): Responses API adapter for gpt-6-luna, explicit standard processing only,
+server-side credentials, private multi-event suggestions and explicit human date correction.
+The prototype's year-guessing behavior is deliberately not ported. No provider request can publish or grant authority.
+Live paid model verification remains outstanding; tests use a local fake and synthetic content.
 No organization endorsement, financial custody or production deployment is authorized.
 
 ## Decisions to request from project participants
