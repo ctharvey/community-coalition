@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-29 - Organization presence and shared calendars design
+
+- Documented approved unclaimed profiles, verified claims, shared feed/content associations and combined calendars.
+- Separated management authority from association, attribution and official publication; marked implementation pending.
+- Corrected architecture status for existing local OIDC and the private manual flyer pilot.
+
 ## 2026-10-29 - Manual public-group flyer source
 
 - Recorded the API-owned Apify pilot as a separate manual source, preserving Graph/OAuth and review boundaries.
