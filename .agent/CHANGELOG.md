@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-29 - FullCalendar dependency status
+
+- Updated the dependency map to reflect the frontend's first standard FullCalendar integration.
+- Linked detailed versions, usage, licensing and remaining browser checks to the frontend-owned record.
+
 ## 2026-10-29 - Dependency usage workflow
 
 - Added dependency usage, version authorities and integration boundaries in `.agent/workflows/dependencies.md`.

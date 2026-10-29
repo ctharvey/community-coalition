@@ -29,8 +29,8 @@ time-zone and attribution fixtures when integrating it; backend APIs own authori
 
 ## Status distinctions
 
-- FullCalendar is proposed for frontend presentation, not installed. Record the actual version/plugins,
-  features used and license review in its owning workflow if adopted.
+- FullCalendar standard is installed for frontend month presentation. Its owning workflow records exact
+  packages, features, license checks, display-zone policy and outstanding manual browser checks.
 - Keycloak is implemented in the API repo. Facebook sign-in/Page authorization is separate work.
 - Caddy is an intended deployment component, not a production deployment performed by this handoff.
 - License metadata is evidence, not a complete transitive security/license audit. Original-code licensing
