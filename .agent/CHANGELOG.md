@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-29 - Dependency usage workflow
+
+- Added dependency usage, version authorities and integration boundaries in `.agent/workflows/dependencies.md`.
+- Linked the workflow from agent instructions and required updates with dependency/usage changes.
+- Distinguished proposed FullCalendar from installed packages; no application dependencies changed.
+
 ## 2026-10-28 - Facebook Page OAuth investigation
 
 - Added a sourced assessment of PTO Page authorization, permissions, token lifetimes and Meta review gates.
