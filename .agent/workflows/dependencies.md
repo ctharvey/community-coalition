@@ -32,6 +32,9 @@ time-zone and attribution fixtures when integrating it; backend APIs own authori
 - FullCalendar standard is installed for frontend month presentation. Its owning workflow records exact
   packages, features, license checks, display-zone policy and outstanding manual browser checks.
 - Keycloak is implemented in the API repo. Facebook sign-in/Page authorization is separate work.
+- The API repo also owns a separately authorized manual public-group Apify flyer tool, using the travel
+  integration pattern. Its workflow records hosted actor usage, private evidence and cost/review boundaries;
+  it is not a Graph/OAuth integration or scheduled worker.
 - Caddy is an intended deployment component, not a production deployment performed by this handoff.
 - License metadata is evidence, not a complete transitive security/license audit. Original-code licensing
   and public-release review remain separate work.

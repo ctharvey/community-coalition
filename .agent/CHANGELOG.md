@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-29 - Manual public-group flyer source
+
+- Recorded the API-owned Apify pilot as a separate manual source, preserving Graph/OAuth and review boundaries.
+- Owner-authorized pilot sourced public flyers; the existing Java pipeline created a private typed draft only.
+
 ## 2026-10-29 - FullCalendar dependency status
 
 - Updated the dependency map to reflect the frontend's first standard FullCalendar integration.
