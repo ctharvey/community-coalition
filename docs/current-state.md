@@ -1,6 +1,8 @@
 # Current state and confirmed findings
 
-**Snapshot date:** 2026-10-26. This is a working synthesis of research, **not** a production deployment or a legal determination.
+**Snapshot date:** 2026-10-28. Custom application architecture is approved; see architecture.md and decisions.md.
+Separate frontend/API foundations are under review on feat/calendar-foundation. The earlier findings below
+remain research, not a production deployment, legal determination or organization endorsement.
 
 ## Real-world context
 

@@ -48,6 +48,7 @@ Initial stakeholders/use cases under exploration include Brookfield Estates HOA,
 - [Example event workflows](docs/use-cases.md)
 - [Prioritized research and implementation plan](docs/roadmap.md)
 - [Decisions and open questions](docs/decisions.md)
+- [Facebook Page OAuth and PTO onboarding assessment](docs/facebook-page-onboarding.md)
 
 ## What this is not (yet)
 
