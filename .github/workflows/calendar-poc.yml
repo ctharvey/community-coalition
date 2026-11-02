@@ -1,0 +1,31 @@
+name: Calendar proof of concept
+
+on:
+  push:
+    branches: [feat/calendar-poc]
+    paths:
+      - 'apps/calendar/**'
+      - '.github/workflows/calendar-poc.yml'
+  pull_request:
+    paths:
+      - 'apps/calendar/**'
+      - '.github/workflows/calendar-poc.yml'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/calendar
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm install --no-audit --no-fund
+      - run: npm test
+      - run: npm run build
+      - name: Confirm public snapshot has no fabricated fixtures
+        run: |
+          node --input-type=module -e "import data from './public/events.json' with { type: 'json' }; if (data.events.length !== 0) throw new Error('No approved real sources configured yet')"

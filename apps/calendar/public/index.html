@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="A prototype public calendar for community organizations near Pflugerville, Texas.">
+  <title>Community Events — Calendar Prototype</title>
+  <style>
+    :root { font: 16px/1.5 system-ui, sans-serif; color: #182b36; background: #f5f8f7; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    header { background: #12483f; color: white; padding: 2.7rem max(1rem, calc((100vw - 74rem)/2)); }
+    header h1 { font-size: clamp(2rem,5vw,3.6rem); line-height: 1.08; margin: .2rem 0 .8rem; }
+    header p { max-width: 50rem; color: #e1f3ee; margin: 0; }
+    main { max-width: 74rem; margin: 0 auto; padding: 1.4rem 1rem 4rem; }
+    .banner { padding: .8rem 1rem; border-left: 4px solid #ed9b42; background: #fff3df; border-radius: .35rem; }
+    .controls { display: flex; flex-wrap: wrap; gap: 1rem; padding: 1.7rem 0; }
+    label { display: block; font-weight: 650; }
+    input, select { width: min(100%, 26rem); display: block; margin-top: .3rem; padding: .7rem; border: 1px solid #81978f; border-radius: .5rem; background: white; font: inherit; }
+    .events { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,20rem),1fr)); gap: 1rem; }
+    article { background: white; border: 1px solid #d9e5e0; border-radius: .8rem; padding: 1.2rem; box-shadow: 0 1px 5px #102e2910; }
+    article h2 { margin: .4rem 0; font-size: 1.3rem; line-height: 1.25; }
+    article .org { font-weight: 700; font-size: .87rem; color: #26665a; }
+    article .when { font-weight: 700; }
+    article p { margin: .5rem 0; overflow-wrap: anywhere; }
+    article a { color: #145f55; font-weight: 700; }
+    .empty { background: white; border: 1px dashed #81978f; padding: 1.8rem; border-radius: .8rem; }
+    a:focus-visible,input:focus-visible,select:focus-visible { outline: 3px solid #bc7400; outline-offset: 2px; }
+    footer { color: #536960; margin-top: 2rem; font-size: .9rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <p>Community Coalition / Calendar Preview</p>
+    <h1>What's happening nearby?</h1>
+    <p>One place to find publicly approved events from independent neighborhood and community organizations.</p>
+  </header>
+  <main>
+    <p class="banner"><strong>Prototype only.</strong> No organization is a confirmed participant yet. Listings must be approved by their source before a public launch.</p>
+    <div class="controls">
+      <label>Search events<input id="search" type="search" placeholder="Festival, volunteering, neighborhood…"></label>
+      <label>Organization<select id="organization"><option value="">All organizations</option></select></label>
+    </div>
+    <section class="events" id="events" aria-live="polite" aria-label="Community events"></section>
+    <footer id="updated"></footer>
+  </main>
+  <script type="module">
+    const list = document.querySelector('#events');
+    const search = document.querySelector('#search');
+    const organization = document.querySelector('#organization');
+    const updated = document.querySelector('#updated');
+    const dateTime = new Intl.DateTimeFormat('en-US', {
+      dateStyle: 'full', timeStyle: 'short', timeZone: 'America/Chicago'
+    });
+    const dayFormat = new Intl.DateTimeFormat('en-US', { dateStyle: 'full', timeZone: 'UTC' });
+    let events = [];
+
+    function element(tag, text, className) {
+      const item = document.createElement(tag);
+      item.textContent = text;
+      if (className) item.className = className;
+      return item;
+    }
+    function render() {
+      const q = search.value.trim().toLowerCase();
+      const source = organization.value;
+      const visible = events.filter(e =>
+        (!source || e.organization === source) &&
+        (!q || (e.title + ' ' + e.organization + ' ' + (e.location || '')).toLowerCase().includes(q)));
+      list.replaceChildren();
+      if (!visible.length) {
+        list.append(element('p', events.length ? 'No matching events.' :
+          'No verified public events have been added yet.', 'empty'));
+        return;
+      }
+      for (const event of visible) {
+        const card = document.createElement('article');
+        card.append(element('div', event.organization, 'org'));
+        card.append(element('h2', event.title));
+        card.append(element('p', event.allDay
+          ? dayFormat.format(new Date((event.localDate || event.start.slice(0, 10)) + 'T12:00:00Z'))
+          : dateTime.format(new Date(event.start)), 'when'));
+        if (event.location) card.append(element('p', event.location));
+        if (event.description) card.append(element('p', event.description));
+        if (event.sourceUrl) {
+          const link = element('a', 'Original event source');
+          link.href = event.sourceUrl;
+          link.rel = 'noopener noreferrer';
+          card.append(link);
+        }
+        list.append(card);
+      }
+    }
+
+    try {
+      const response = await fetch('./events.json', { cache: 'no-store' });
+      if (!response.ok) throw new Error('HTTP ' + response.status);
+      const data = await response.json();
+      events = Array.isArray(data.events) ? data.events : [];
+      for (const org of [...new Set(events.map(e => e.organization))].sort()) {
+        const option = document.createElement('option');
+        option.value = option.textContent = org;
+        organization.append(option);
+      }
+      updated.textContent = data.generatedAt
+        ? 'Last verified refresh: ' + dateTime.format(new Date(data.generatedAt))
+        : 'Waiting for approved calendar sources.';
+      render();
+    } catch {
+      list.append(element('p', 'The calendar is unavailable. Please try again later.', 'empty'));
+    }
+    search.addEventListener('input', render);
+    organization.addEventListener('change', render);
+  </script>
+</body>
+</html>
